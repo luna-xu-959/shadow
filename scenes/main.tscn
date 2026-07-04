@@ -1,0 +1,137 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player_scene"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_game_manager"]
+[ext_resource type="Script" path="res://scripts/sun_controller.gd" id="3_sun_controller"]
+[ext_resource type="Script" path="res://scripts/grass_ground.gd" id="4_grass_ground"]
+[ext_resource type="Script" path="res://scripts/split_screen_setup.gd" id="5_split_screen"]
+[ext_resource type="Script" path="res://scripts/player_follow_camera.gd" id="6_follow_camera"]
+[ext_resource type="Script" path="res://scripts/town_builder.gd" id="7_town_builder"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(40, 40)
+subdivide_width = 48
+subdivide_depth = 48
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(40, 0.2, 40)
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 1
+background_color = Color(0.62, 0.8, 0.96, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.78, 0.86, 0.95, 1)
+ambient_light_energy = 0.38
+
+[node name="Main" type="Node3D"]
+
+[node name="SunSystem" type="Node3D" parent="."]
+script = ExtResource("3_sun_controller")
+
+[node name="MainSun" type="DirectionalLight3D" parent="SunSystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("4_grass_ground")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_ground")
+
+[node name="Town" type="Node3D" parent="."]
+script = ExtResource("7_town_builder")
+
+[node name="Player0" parent="." instance=ExtResource("1_player_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+player_id = 0
+faction = 0
+skin_tint = Color(0.98, 0.97, 0.94, 1)
+
+[node name="Player1" parent="." instance=ExtResource("1_player_scene")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+player_id = 1
+faction = 1
+skin_tint = Color(0.62, 0.78, 0.98, 0.58)
+
+[node name="CameraP0" type="Camera3D" parent="."]
+fov = 62.0
+script = ExtResource("6_follow_camera")
+player_path = NodePath("../Player0")
+player_id = 0
+use_mouse_look = false
+
+[node name="CameraP1" type="Camera3D" parent="."]
+fov = 62.0
+script = ExtResource("6_follow_camera")
+player_path = NodePath("../Player1")
+player_id = 1
+use_mouse_look = true
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("2_game_manager")
+
+[node name="SplitScreen" type="CanvasLayer" parent="."]
+layer = 1
+script = ExtResource("5_split_screen")
+
+[node name="Backdrop" type="ColorRect" parent="SplitScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.09, 0.11, 1)
+
+[node name="ViewportLeft" type="SubViewportContainer" parent="SplitScreen"]
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="SplitScreen/ViewportLeft"]
+handle_input_locally = false
+render_target_update_mode = 4
+size = Vector2i(960, 1080)
+
+[node name="ViewportRight" type="SubViewportContainer" parent="SplitScreen"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="SplitScreen/ViewportRight"]
+handle_input_locally = false
+render_target_update_mode = 4
+size = Vector2i(960, 1080)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="StatusLabel" type="Label" parent="CanvasLayer"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 900.0
+offset_bottom = 140.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 17
+text = "Loading..."
