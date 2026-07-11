@@ -29,11 +29,30 @@ res://
 
 - 先打开 `scenes/main.tscn`
 - 按 **F5**（或右上角 Play）
+- 启动后会看到联机菜单：
+  - **Local Split Screen** — 同一台电脑双人分屏（原有玩法）
+  - **Host Game** — 你当 Human（主机）
+  - **Join Game** — 你当 Ghost（加入方）
+
+## 互联网联机（Tailscale，免费）
+
+1. 两人各安装 [Tailscale](https://tailscale.com/download/windows) 并登录
+2. 主机在 PowerShell 运行：`tailscale ip -4`，把 `100.x.x.x` 发给朋友
+3. 主机点 **Host Game**
+4. 朋友输入主机 Tailscale IP，点 **Join Game**
+5. 默认端口 **8910**（UDP）。若连不上，在主机防火墙放行 UDP 8910
+
+| 角色 | 阵营 | 操作 |
+|------|------|------|
+| 主机 | Human (P0) | 方向键 / IJKL，U/O 转视角 |
+| 加入方 | Ghost (P1) | WASD，Space 跳跃，按住 F / 鼠标左键蓄力踩影 |
+
+## 本地分屏
 
 | 玩家 | 颜色 | 操作 |
 |------|------|------|
-| P0 | 蓝身黄头 | WASD |
-| P1 | 红身青头 | 方向键 |
+| P0 | 蓝身黄头 | 方向键 / IJKL |
+| P1 | 红身青头 | WASD |
 
 ## 若仍然闪退
 

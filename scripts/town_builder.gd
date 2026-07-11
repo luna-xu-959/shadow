@@ -12,11 +12,26 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var night := _night_strength()
+	var interior_on := night > 0.12
 	for mat in _window_materials:
-		mat.emission_energy_multiplier = lerpf(0.25, 1.45, night)
+		if mat == null:
+			continue
+		mat.emission_energy_multiplier = lerpf(0.0, 1.45, night) if interior_on else 0.0
 	for light in _interior_lights:
-		light.light_energy = lerpf(0.0, 1.6, night)
-		light.omni_range = lerpf(0.0, 9.0, night)
+		if not is_instance_valid(light):
+			continue
+		if interior_on:
+			light.visible = true
+			light.light_energy = lerpf(0.0, 1.6, night)
+			light.omni_range = lerpf(0.0, 9.0, night)
+			if not light.is_in_group(ShadowRules.MAIN_SHADOW_LIGHT_GROUP):
+				light.add_to_group(ShadowRules.MAIN_SHADOW_LIGHT_GROUP)
+		else:
+			light.light_energy = 0.0
+			light.omni_range = 0.0
+			light.visible = false
+			if light.is_in_group(ShadowRules.MAIN_SHADOW_LIGHT_GROUP):
+				light.remove_from_group(ShadowRules.MAIN_SHADOW_LIGHT_GROUP)
 
 
 func _night_strength() -> float:
@@ -53,7 +68,7 @@ func _build_town() -> void:
 func _add_building(building_name: String, spec: Dictionary) -> void:
 	var body := StaticBody3D.new()
 	body.name = building_name
-	body.collision_layer = 1
+	body.collision_layer = ShadowRules.BUILDING_COLLISION_LAYER
 	body.collision_mask = 0
 	body.position = spec.pos
 	add_child(body)
@@ -127,8 +142,9 @@ func _add_interior_light(building: StaticBody3D, size: Vector3) -> void:
 	light.light_color = Color(1.0, 0.86, 0.58)
 	light.light_energy = 0.0
 	light.omni_range = 0.0
+	light.visible = false
 	light.shadow_enabled = true
-	light.add_to_group(ShadowRules.MAIN_SHADOW_LIGHT_GROUP)
+	# Added to main_shadow_light only at night (see _process).
 	building.add_child(light)
 	_interior_lights.append(light)
 
@@ -138,7 +154,6 @@ func _add_street_lamp(world_pos: Vector3) -> void:
 	lamp.name = "StreetLamp"
 	lamp.position = world_pos
 	lamp.set_script(StreetLampScript)
-	add_child(lamp)
 
 	var pole_mesh := CylinderMesh.new()
 	pole_mesh.top_radius = 0.07
@@ -179,6 +194,9 @@ func _add_street_lamp(world_pos: Vector3) -> void:
 	light.shadow_enabled = true
 	light.add_to_group(ShadowRules.MAIN_SHADOW_LIGHT_GROUP)
 	lamp.add_child(light)
+
+	# Add to tree only after OmniLight3D exists so street_lamp.gd @onready resolves.
+	add_child(lamp)
 
 
 func _mat_wall(color: Color) -> StandardMaterial3D:

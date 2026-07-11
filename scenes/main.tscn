@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player_scene"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_game_manager"]
 [ext_resource type="Script" path="res://scripts/sun_controller.gd" id="3_sun_controller"]
 [ext_resource type="Script" path="res://scripts/grass_ground.gd" id="4_grass_ground"]
@@ -22,8 +23,15 @@ background_color = Color(0.62, 0.8, 0.96, 1)
 ambient_light_source = 2
 ambient_light_color = Color(0.78, 0.86, 0.95, 1)
 ambient_light_energy = 0.38
+glow_enabled = true
+glow_intensity = 0.85
+glow_strength = 1.05
+glow_bloom = 0.15
+glow_hdr_threshold = 0.75
+glow_hdr_scale = 1.6
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_main")
 
 [node name="SunSystem" type="Node3D" parent="."]
 script = ExtResource("3_sun_controller")

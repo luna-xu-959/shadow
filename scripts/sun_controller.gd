@@ -31,6 +31,11 @@ func _process(delta: float) -> void:
 
 
 func _apply_day_night(_delta: float) -> void:
+	if _sun == null:
+		_sun = get_node_or_null("MainSun") as DirectionalLight3D
+		if _sun == null:
+			return
+
 	var day_factor := _compute_day_factor()
 	var sunlit := day_factor > 0.06
 
@@ -84,6 +89,8 @@ func get_time_label() -> String:
 	var day_factor := _compute_day_factor()
 	if day_factor > 0.82:
 		return "Noon"
+	if day_factor < 0.28:
+		return "Dusk"
 	if _cycle_phase < 0.5:
 		return "Morning"
 	return "Afternoon"
