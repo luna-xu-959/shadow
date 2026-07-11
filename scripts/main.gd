@@ -61,9 +61,12 @@ func _start_join_session(address: String) -> void:
 	if trimmed.is_empty():
 		_menu.show_menu("Enter the host IP in the text box, then click Join.")
 		return
+	# ENet handshake needs the main loop running; a paused tree can stall joins.
+	get_tree().paused = false
 	_menu.show_connecting("Connecting to %s:%d ..." % [trimmed, NETWORK_PORT])
 	var err: int = _network().join_game(trimmed)
 	if err != OK and err != ERR_BUSY:
+		get_tree().paused = true
 		_menu.show_menu("Join failed immediately (error %d)." % err)
 
 
@@ -77,8 +80,9 @@ func _on_network_session_started(is_host: bool) -> void:
 		_finish_session_start(
 			(
 				"Hosting on port %d — waiting for Ghost to join.\n"
-				+ "Share your Tailscale IP (run: tailscale ip -4)."
-			) % NETWORK_PORT
+				+ "Your Tailscale IP: %s\n"
+				+ "Tell your friend to Join with that IP."
+			) % [NETWORK_PORT, _get_tailscale_ip_hint()]
 		)
 	else:
 		_configure_online_client()
@@ -101,6 +105,22 @@ func _on_network_session_failed(message: String) -> void:
 	_waiting_for_peer = false
 	_network().close_session()
 	_menu.show_menu(message)
+
+
+func _get_tailscale_ip_hint() -> String:
+	var output: Array = []
+	var exit_code := OS.execute(
+		"C:/Program Files/Tailscale/tailscale.exe",
+		["ip", "-4"],
+		output,
+		true,
+		false
+	)
+	if exit_code == 0 and output.size() > 0:
+		var ip := str(output[0]).strip_edges()
+		if not ip.is_empty():
+			return ip
+	return "run: tailscale ip -4"
 
 
 func _begin_session(online: bool) -> void:
