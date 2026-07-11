@@ -243,6 +243,7 @@ func _physics_process(delta: float) -> void:
 		_apply_walk_pose(delta, wish_dir)
 
 	move_and_slide()
+	_replicate_authority_state()
 
 	if _pending_jump_land:
 		_pending_jump_land = false
@@ -254,15 +255,29 @@ func _emit_jump_landed(landing_position: Vector3) -> void:
 		if multiplayer.is_server():
 			jump_landed.emit(landing_position)
 		else:
-			_report_jump_landed.rpc_id(1, landing_position)
+			var gm := get_parent().get_node_or_null("GameManager")
+			if gm:
+				gm.rpc_ghost_jump_landed.rpc_id(1, landing_position)
+			else:
+				push_error("Player: missing GameManager for jump RPC.")
 	else:
 		jump_landed.emit(landing_position)
 
 
-@rpc("any_peer", "call_remote", "reliable")
-func _report_jump_landed(landing_position: Vector3) -> void:
+func _replicate_authority_state() -> void:
+	if not multiplayer.has_multiplayer_peer() or not is_multiplayer_authority():
+		return
+	# Client-owned pawns must push transforms to the listen server explicitly.
 	if multiplayer.is_server():
-		jump_landed.emit(landing_position)
+		return
+	_replicate_state.rpc(global_position, rotation, velocity)
+
+
+@rpc("authority", "call_remote", "unreliable")
+func _replicate_state(pos: Vector3, rot: Vector3, vel: Vector3) -> void:
+	global_position = pos
+	rotation = rot
+	velocity = vel
 
 
 func _should_use_jump_pose() -> bool:

@@ -12,10 +12,14 @@ const HINT := (
 @onready var _hint_label: Label = %HintLabel
 @onready var _address_field: LineEdit = %AddressField
 @onready var _status_label: Label = %StatusLabel
+@onready var _local_button: Button = %LocalButton
+@onready var _host_button: Button = %HostButton
+@onready var _join_button: Button = %JoinButton
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	mouse_filter = Control.MOUSE_FILTER_STOP
 	_hint_label.text = HINT
 	_status_label.text = ""
 	_address_field.placeholder_text = "Host IP, e.g. 100.64.0.5 or 127.0.0.1"
@@ -30,7 +34,7 @@ func show_menu(message: String = "") -> void:
 	_address_field.editable = true
 	_status_label.text = message
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	call_deferred("_focus_address_field")
+	call_deferred("_focus_mode_buttons")
 
 
 func hide_menu() -> void:
@@ -52,9 +56,11 @@ func get_join_address() -> String:
 	return _address_field.text.strip_edges()
 
 
-func _focus_address_field() -> void:
-	if _address_field:
-		_address_field.grab_focus()
+func _focus_mode_buttons() -> void:
+	if _local_button and not _local_button.disabled:
+		_local_button.grab_focus()
+	elif _host_button and not _host_button.disabled:
+		_host_button.grab_focus()
 
 
 func _on_address_gui_input(event: InputEvent) -> void:
@@ -78,11 +84,11 @@ func _on_join_pressed(_text: String = "") -> void:
 	var address := get_join_address()
 	if address.is_empty():
 		set_status("Type the host IP in the box above, then click Join.")
-		_focus_address_field()
+		_address_field.grab_focus()
 		return
 	if not _looks_like_ip(address):
 		set_status("Invalid IP format. Example: 100.64.0.5 or 127.0.0.1")
-		_focus_address_field()
+		_address_field.grab_focus()
 		return
 	show_connecting("Connecting to %s ..." % address)
 	join_requested.emit(address)
@@ -105,9 +111,6 @@ func _looks_like_ip(address: String) -> bool:
 
 
 func _set_buttons_enabled(enabled: bool) -> void:
-	var panel := get_node_or_null("Panel")
-	if panel == null:
-		return
-	for child in panel.get_children():
-		if child is BaseButton:
-			(child as BaseButton).disabled = not enabled
+	for button in [_local_button, _host_button, _join_button]:
+		if button:
+			button.disabled = not enabled

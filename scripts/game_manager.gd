@@ -42,7 +42,7 @@ func _ready() -> void:
 
 	_human = _scene_root.get_node_or_null("Player0")
 	_ghost = _scene_root.get_node_or_null("Player1")
-	_status_label = _scene_root.get_node_or_null("CanvasLayer/StatusLabel") as Label
+	_status_label = _scene_root.get_node_or_null("CanvasLayer/UIRoot/StatusLabel") as Label
 
 	if _sun == null or _human == null or _ghost == null:
 		push_error("GameManager: missing Sun/Player nodes in main scene.")
@@ -85,6 +85,21 @@ func _connect_dark_stomp() -> void:
 	_ghost_stomp.stomp_hit.connect(_on_dark_stomp_hit)
 	_ghost_stomp.stomp_missed.connect(_on_dark_stomp_missed)
 	_ghost_stomp.charge_interrupted.connect(_on_charge_interrupted)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func rpc_ghost_jump_landed(landing_position: Vector3) -> void:
+	_on_ghost_jump_landed(landing_position, _ghost, _human)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func rpc_ghost_stomp_hit(method: String) -> void:
+	_on_dark_stomp_hit(_human, method)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func rpc_ghost_stomp_missed(method: String) -> void:
+	_on_dark_stomp_missed(method)
 
 
 func _on_human_jump_landed(_landing_position: Vector3) -> void:

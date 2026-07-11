@@ -21,10 +21,26 @@ var _camera_enabled := true
 func configure_for_player(enabled: bool, mouse_look: bool) -> void:
 	_camera_enabled = enabled
 	use_mouse_look = mouse_look
-	if enabled and mouse_look:
+	if enabled and mouse_look and not _is_pause_menu_open():
 		call_deferred("_capture_look")
-	elif not enabled:
-		_release_look()
+	elif not enabled or _is_pause_menu_open():
+		release_mouse_look()
+
+
+func release_mouse_look() -> void:
+	_release_look()
+
+
+func restore_mouse_look_if_needed() -> void:
+	if _camera_enabled and use_mouse_look and not _is_pause_menu_open():
+		call_deferred("_capture_look")
+
+
+func _is_pause_menu_open() -> bool:
+	var main := get_tree().current_scene
+	if main == null or not main.has_method("is_pause_menu_open"):
+		return false
+	return main.call("is_pause_menu_open")
 
 
 func _ready() -> void:
@@ -38,16 +54,13 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if use_mouse_look and _look_captured and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if use_mouse_look and _look_captured and not _is_pause_menu_open():
+		if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _camera_enabled or not use_mouse_look:
-		return
-
-	if event.is_action_pressed("ui_cancel"):
-		_release_look()
+	if not _camera_enabled or not use_mouse_look or _is_pause_menu_open():
 		return
 
 	if event is InputEventMouseMotion:
@@ -82,6 +95,8 @@ func is_look_captured() -> bool:
 func _is_mouse_on_my_panel() -> bool:
 	if not _camera_enabled:
 		return false
+	if not _is_split_screen_active():
+		return true
 	var mouse := get_viewport().get_mouse_position()
 	var width := get_viewport().get_visible_rect().size.x
 	if width < 64.0:
@@ -89,6 +104,14 @@ func _is_mouse_on_my_panel() -> bool:
 	if player_id == 1:
 		return mouse.x >= width * 0.5
 	return mouse.x < width * 0.5
+
+
+func _is_split_screen_active() -> bool:
+	var main := get_tree().current_scene
+	if main == null:
+		return false
+	var split := main.get_node_or_null("SplitScreen") as CanvasLayer
+	return split != null and split.visible
 
 
 func get_camera_forward_xz() -> Vector3:

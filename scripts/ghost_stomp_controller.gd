@@ -324,28 +324,18 @@ func _resolve_instant_stomp() -> void:
 
 func _emit_stomp_hit(method: String) -> void:
 	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
-		_report_stomp_hit.rpc_id(1, method)
-	else:
-		stomp_hit.emit(_human, method)
+		if _game_manager:
+			_game_manager.rpc_ghost_stomp_hit.rpc_id(1, method)
+		return
+	stomp_hit.emit(_human, method)
 
 
 func _emit_stomp_missed(method: String) -> void:
 	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
-		_report_stomp_missed.rpc_id(1, method)
-	else:
-		stomp_missed.emit(method)
-
-
-@rpc("any_peer", "call_remote", "reliable")
-func _report_stomp_hit(method: String) -> void:
-	if multiplayer.is_server():
-		stomp_hit.emit(_human, method)
-
-
-@rpc("any_peer", "call_remote", "reliable")
-func _report_stomp_missed(method: String) -> void:
-	if multiplayer.is_server():
-		stomp_missed.emit(method)
+		if _game_manager:
+			_game_manager.rpc_ghost_stomp_missed.rpc_id(1, method)
+		return
+	stomp_missed.emit(method)
 
 
 func _resolve_charge_release() -> void:

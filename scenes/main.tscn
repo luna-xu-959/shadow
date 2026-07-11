@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player_scene"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/split_screen_setup.gd" id="5_split_screen"]
 [ext_resource type="Script" path="res://scripts/player_follow_camera.gd" id="6_follow_camera"]
 [ext_resource type="Script" path="res://scripts/town_builder.gd" id="7_town_builder"]
+[ext_resource type="Script" path="res://scripts/resizable_ui_root.gd" id="8_ui_root"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(40, 40)
@@ -88,10 +89,22 @@ use_mouse_look = true
 script = ExtResource("2_game_manager")
 
 [node name="SplitScreen" type="CanvasLayer" parent="."]
+visible = false
 layer = 1
 script = ExtResource("5_split_screen")
 
-[node name="Backdrop" type="ColorRect" parent="SplitScreen"]
+[node name="LayoutRoot" type="Control" parent="SplitScreen"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_ui_root")
+
+[node name="Backdrop" type="ColorRect" parent="SplitScreen/LayoutRoot"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -100,7 +113,8 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.08, 0.09, 0.11, 1)
 
-[node name="ViewportLeft" type="SubViewportContainer" parent="SplitScreen"]
+[node name="ViewportLeft" type="SubViewportContainer" parent="SplitScreen/LayoutRoot"]
+layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 1.0
@@ -109,12 +123,13 @@ grow_vertical = 2
 stretch = true
 mouse_filter = 2
 
-[node name="SubViewport" type="SubViewport" parent="SplitScreen/ViewportLeft"]
+[node name="SubViewport" type="SubViewport" parent="SplitScreen/LayoutRoot/ViewportLeft"]
 handle_input_locally = false
 render_target_update_mode = 4
-size = Vector2i(960, 1080)
+size = Vector2i(640, 720)
 
-[node name="ViewportRight" type="SubViewportContainer" parent="SplitScreen"]
+[node name="ViewportRight" type="SubViewportContainer" parent="SplitScreen/LayoutRoot"]
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 1.0
@@ -124,22 +139,37 @@ grow_vertical = 2
 stretch = true
 mouse_filter = 2
 
-[node name="SubViewport" type="SubViewport" parent="SplitScreen/ViewportRight"]
+[node name="SubViewport" type="SubViewport" parent="SplitScreen/LayoutRoot/ViewportRight"]
 handle_input_locally = false
 render_target_update_mode = 4
-size = Vector2i(960, 1080)
+size = Vector2i(640, 720)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="StatusLabel" type="Label" parent="CanvasLayer"]
+[node name="UIRoot" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_ui_root")
+
+[node name="StatusLabel" type="Label" parent="CanvasLayer/UIRoot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
 offset_left = 16.0
 offset_top = 12.0
-offset_right = 900.0
+offset_right = -16.0
 offset_bottom = 140.0
+grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.75)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_font_sizes/font_size = 17
+autowrap_mode = 3
 text = "Loading..."
