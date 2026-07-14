@@ -21,14 +21,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-InputSetup="*res://scripts/input_setup.gd"
-NetworkManager="*res://scripts/network_manager.gd"
+InputSetup="*res://scripts/bootstrap/input_setup.gd"
+NetworkManager="*res://scripts/network/network_manager.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/resizable=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

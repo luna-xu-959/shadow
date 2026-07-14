@@ -1,14 +1,14 @@
 [gd_scene load_steps=12 format=3]
 
-[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="1_player_scene"]
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_game_manager"]
-[ext_resource type="Script" path="res://scripts/sun_controller.gd" id="3_sun_controller"]
-[ext_resource type="Script" path="res://scripts/grass_ground.gd" id="4_grass_ground"]
-[ext_resource type="Script" path="res://scripts/split_screen_setup.gd" id="5_split_screen"]
-[ext_resource type="Script" path="res://scripts/player_follow_camera.gd" id="6_follow_camera"]
-[ext_resource type="Script" path="res://scripts/town_builder.gd" id="7_town_builder"]
-[ext_resource type="Script" path="res://scripts/resizable_ui_root.gd" id="8_ui_root"]
+[ext_resource type="PackedScene" path="res://scenes/characters/player.tscn" id="1_player_scene"]
+[ext_resource type="Script" path="res://scripts/bootstrap/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/gameplay/game_manager.gd" id="2_game_manager"]
+[ext_resource type="Script" path="res://scripts/world/sun_controller.gd" id="3_sun_controller"]
+[ext_resource type="Script" path="res://scripts/world/grass_ground.gd" id="4_grass_ground"]
+[ext_resource type="Script" path="res://scripts/camera/split_screen_setup.gd" id="5_split_screen"]
+[ext_resource type="Script" path="res://scripts/camera/player_follow_camera.gd" id="6_follow_camera"]
+[ext_resource type="Script" path="res://scripts/world/town_builder.gd" id="7_town_builder"]
+[ext_resource type="Script" path="res://scripts/ui/resizable_ui_root.gd" id="8_ui_root"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(40, 40)
@@ -62,13 +62,13 @@ script = ExtResource("7_town_builder")
 [node name="Player0" parent="." instance=ExtResource("1_player_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
 player_id = 0
-faction = 0
+team = 0
 skin_tint = Color(0.98, 0.97, 0.94, 1)
 
 [node name="Player1" parent="." instance=ExtResource("1_player_scene")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 player_id = 1
-faction = 1
+team = 1
 skin_tint = Color(0.62, 0.78, 0.98, 0.58)
 
 [node name="CameraP0" type="Camera3D" parent="."]

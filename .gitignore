@@ -3,12 +3,25 @@
 .import/
 *.import
 DerivedDataCache/
+Saved/
+Intermediate/
 
 # Export / build
 /android/
 /export/
 export.cfg
 export_presets.cfg
+
+# Third-party art packs / engine samples (keep local only)
+/Arts/
+/Godot/
+/Unity/
+/Unreal Engine/
+/Map/
+/PlayerCharacter/
+Preview.png
+Unity_Setup.png
+UnrealEngine_Setup.png
 
 # OS
 .DS_Store
@@ -17,6 +30,10 @@ Thumbs.db
 # IDE / local
 .vscode/
 .cursor/
+.mcp.json
+.env
+*.local
 
 # Logs
 *.log
+gcm-diagnose.log
