@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "characters": [
+    {
+      "id": "snail",
+      "name": "影噬蜗牛",
+      "summary": "慢速硬壳，锋利影子。",
+      "model": "characters/default/model/character_body.fbx",
+      "animations": {
+        "idle": "characters/default/animations/idle.fbx"
+      },
+      "parts": {
+        "body": [0.94, 0.76, 0.62, 1.0],
+        "top": [0.45, 0.32, 0.72, 1.0],
+        "bottom": [0.22, 0.24, 0.30, 1.0],
+        "hat": [0.55, 0.28, 0.75, 1.0]
+      },
+      "part_textures": {
+        "body": "characters/default/model/body_basecolor.jpg",
+        "top": "characters/default/model/top_basecolor.jpg",
+        "bottom": "characters/default/model/bottom_basecolor.jpg",
+        "hat": "characters/default/model/hat_basecolor.jpg"
+      },
+      "accent": [0.95, 0.72, 0.28, 1.0]
+    },
+    {
+      "id": "plush",
+      "name": "毛绒跑者",
+      "summary": "弹跳跃动的吉祥物战士。",
+      "accent": [0.62, 0.78, 0.98, 1.0]
+    }
+  ],
+  "skins": {
+    "snail": [
+      {"id": "default", "name": "经典", "tint": [0.98, 0.97, 0.94, 1.0]},
+      {"id": "moss", "name": "苔藓", "tint": [0.55, 0.78, 0.42, 1.0]},
+      {"id": "ember", "name": "余烬", "tint": [0.92, 0.45, 0.32, 1.0]}
+    ],
+    "plush": [
+      {"id": "default", "name": "经典", "tint": [0.97, 0.96, 0.94, 1.0]},
+      {"id": "sky", "name": "晴空", "tint": [0.62, 0.78, 0.98, 1.0]},
+      {"id": "berry", "name": "浆果", "tint": [0.82, 0.42, 0.72, 1.0]}
+    ]
+  },
+  "accessories": {
+    "snail": [
+      {"id": "none", "name": "无"},
+      {"id": "shell_spikes", "name": "尖刺壳"},
+      {"id": "party_hat", "name": "派对帽"}
+    ],
+    "plush": [
+      {"id": "none", "name": "无"},
+      {"id": "scarf", "name": "围巾"},
+      {"id": "goggles", "name": "护目镜"}
+    ]
+  },
+  "ui": {
+    "background": {
+      "wardrobe": "background/changing_room.jpg"
+    },
+    "wardrobe": {
+      "tabs": {
+        "top": "ui/wardrobe/tabs/tab_category_top.png",
+        "bottom": "ui/wardrobe/tabs/tab_category_bottom.png",
+        "waist": "ui/wardrobe/tabs/tab_category_waist.png",
+        "necklace": "ui/wardrobe/tabs/tab_category_necklace.png",
+        "head": "ui/wardrobe/tabs/tab_category_head.png"
+      },
+      "panels": {
+        "clothing_unified": "ui/wardrobe/panels/clothing_panel_unified.png",
+        "palette_blank": "ui/wardrobe/panels/panel_frame_empty.png",
+        "palette_unified": "ui/wardrobe/panels/palette_panel_unified.png",
+        "item_card_vertical": "ui/wardrobe/panels/item_card_vertical.png",
+        "frame_empty": "ui/wardrobe/panels/panel_frame_empty.png"
+      },
+      "frames": {
+        "selected_gold": "ui/wardrobe/frames/frame_selected_gold_check.png",
+        "selected_teal": "ui/wardrobe/frames/frame_selected_teal_check.png"
+      }
+    },
+    "common": {
+      "buttons": {
+        "back_yellow": "ui/common/buttons/btn_back_yellow.png",
+        "back_purple": "ui/common/buttons/btn_back_purple.png",
+        "settings": "ui/common/buttons/btn_settings_purple.png",
+        "settings_alt": "ui/common/buttons/btn_settings_purple_alt.png",
+        "ready_green": "ui/common/buttons/btn_ready_green.png",
+        "ready_yellow_skull": "ui/common/buttons/btn_ready_yellow_skull.png",
+        "start_lets_go": "ui/common/buttons/btn_start_lets_go.png"
+      },
+      "banners": {
+        "title_graffiti": "ui/common/banners/banner_title_graffiti.png",
+        "info_purple_teal": "ui/common/banners/banner_info_purple_teal.png"
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://barena000001"]
+
+[ext_resource type="Script" path="res://scripts/match/arena.gd" id="1_arena"]
+[ext_resource type="Script" path="res://scripts/match/match_manager.gd" id="2_manager"]
+[ext_resource type="PackedScene" uid="uid://bmatchhud001" path="res://scenes/ui/match/hud.tscn" id="3_hud"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.22, 0.28, 0.2, 1)
+roughness = 0.95
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(40, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(40, 0.2, 40)
+
+[node name="Arena" type="Node3D"]
+script = ExtResource("1_arena")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 12, 0)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("StandardMaterial3D_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="SpawnPoints" type="Node3D" parent="."]
+
+[node name="Spawn0" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
+
+[node name="Spawn1" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+
+[node name="Spawn2" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 4)
+
+[node name="Spawn3" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+
+[node name="Spawn4" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Spawn5" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+
+[node name="Spawn6" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+
+[node name="Spawn7" type="Node3D" parent="SpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="PlayersRoot" type="Node3D" parent="."]
+
+[node name="MatchManager" type="Node" parent="."]
+script = ExtResource("2_manager")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 14, 16)
+
+[node name="HUDLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="HUDLayer" instance=ExtResource("3_hud")]

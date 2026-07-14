@@ -34,6 +34,12 @@ Thumbs.db
 .env
 *.local
 
+# Nested Godot projects
+shadow-snail/.godot/
+shadow-snail/Saved/
+shadow-resource/_archive/
+**/_extract_test/
+
 # Logs
 *.log
 gcm-diagnose.log

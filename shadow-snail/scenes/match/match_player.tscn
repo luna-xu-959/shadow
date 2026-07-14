@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmatchplayer1"]
+
+[ext_resource type="Script" path="res://scripts/match/match_player.gd" id="1_script"]
+
+[node name="MatchPlayer" type="CharacterBody3D"]
+script = ExtResource("1_script")

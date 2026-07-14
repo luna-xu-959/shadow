@@ -1,70 +1,49 @@
-# Shadow Demo (Godot)
+# Shadow
 
-## 打开项目（重要）
+Godot shadow gameplay monorepo: early demo at repo root, wardrobe prototype in `shadow-snail/`.
 
-1. 启动 **Godot 4.4 或更高版本**（Standard 版）
-2. 点 **Import**，选择文件夹：
-   `D:\Workspace\shadow-demo-godot`
-3. **不要**打开里面的 `.godot` 子文件夹
-4. 选中 `project.godot` → Import & Edit
+## Projects
 
-## 在编辑器里看到小人和关卡
+| Path | Description | Open with Godot |
+|------|-------------|-----------------|
+| `/` (repo root) | Human vs Ghost demo + multiplayer | `project.godot` |
+| `shadow-snail/` | 影噬 v2：菜单、角色选择、外观装扮 | `shadow-snail/project.godot` |
+| `shadow-resource/` | Shared art pack used by `shadow-snail` (sibling folder) | — (not a Godot project) |
 
-导入后左侧 **FileSystem** 应出现：
+Remote: [luna-xu-959/shadow](https://github.com/luna-xu-959/shadow)
 
-```
-res://
-├── scenes/
-│   ├── main.tscn      ← 双击打开这个
-│   └── player/
-│       └── player.tscn
-├── scripts/
-└── icon.svg
-```
+---
 
-**必须双击 `scenes/main.tscn`**，3D 视口里才会出现地面、两个小人、太阳和相机。  
-若 FileSystem 只有 `icon.svg`：菜单 **Project → Reload Current Project**。
+## shadow-snail（当前主开发）
 
-## 运行
+1. 启动 **Godot 4.7+**（Standard）
+2. **Import** → 选择仓库里的 `shadow-snail/` 文件夹（含 `project.godot`）
+3. 保持 `shadow-resource/` 与 `shadow-snail/` 为**同级目录**（脚本通过 `res://../shadow-resource` 读取）
+4. 运行后从主菜单进入**外观装扮**；独立预览角色原型可打开 `scenes/dev/character_prototype_preview.tscn`（F6）
 
-- 先打开 `scenes/main.tscn`
-- 按 **F5**（或右上角 Play）
-- 启动后会看到联机菜单：
-  - **Local Split Screen** — 同一台电脑双人分屏（原有玩法）
-  - **Host Game** — 你当 Human（主机）
-  - **Join Game** — 你当 Ghost（加入方）
+---
 
-## 互联网联机（Tailscale，免费）
+## 根目录 Demo（旧版玩法）
 
-1. 两人各安装 [Tailscale](https://tailscale.com/download/windows) 并登录
-2. 主机在 PowerShell 运行：`tailscale ip -4`，把 `100.x.x.x` 发给朋友
-3. 主机点 **Host Game**
-4. 朋友输入主机 Tailscale IP，点 **Join Game**
-5. 默认端口 **8910**（UDP）。若连不上，在主机防火墙放行 UDP 8910
+1. 启动 **Godot 4.4+**
+2. **Import** → 选择本仓库**根目录**的 `project.godot`
+3. 双击打开 `scenes/main.tscn`，按 **F5** 运行
+
+联机：
+
+- **Local Split Screen** — 本机双人分屏
+- **Host Game** / **Join Game** — 推荐配合 Tailscale；默认 UDP **8910**
 
 | 角色 | 阵营 | 操作 |
 |------|------|------|
 | 主机 | Human (P0) | 方向键 / IJKL，U/O 转视角 |
 | 加入方 | Ghost (P1) | WASD，Space 跳跃，按住 F / 鼠标左键蓄力踩影 |
 
-## 本地分屏
+本地分屏：P0 蓝身黄头（方向键），P1 红身青头（WASD）。
 
-| 玩家 | 颜色 | 操作 |
-|------|------|------|
-| P0 | 蓝身黄头 | 方向键 / IJKL |
-| P1 | 红身青头 | WASD |
+---
 
-## 若仍然闪退
+## Notes
 
-1. 确认 Godot 版本 ≥ 4.4（菜单 **Help → About**）
-2. **Project → Reload Current Project**
-3. 查看 **Output** 面板红色报错
-4. Windows 日志：`%APPDATA%\Godot\app_userdata\shadow-demo-godot\logs\`
-
-常见原因：用了 Godot 3.x、显卡驱动与强制 D3D12（已从项目配置移除）。
-
-## 规则脚本
-
-- `scripts/shadow_rules.gd` — 主光影子判定
-- `scripts/game_manager.gd` — 定时检测与胜负
-- `scripts/player.gd` — 移动与上色
+- 不要提交 `.godot/`、`Saved/` 或本机大体积第三方 Art/Unity/Unreal 包
+- 角色 FBX：`shadow-resource/characters/default/model/character_body.fbx`，idle：`.../animations/idle.fbx`

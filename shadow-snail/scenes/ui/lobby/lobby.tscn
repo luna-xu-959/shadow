@@ -1,0 +1,140 @@
+[gd_scene load_steps=3 format=3 uid="uid://blobbyscene1"]
+
+[ext_resource type="Script" path="res://scripts/ui/lobby.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.08, 0.1, 0.14, 0.92)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.07, 0.11, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "对局房间"
+
+[node name="StatusLabel" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.82, 0.9, 1)
+
+[node name="CountdownLabel" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.95, 0.72, 0.28, 1)
+
+[node name="SettingsHBox" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ModeLabel" type="Label" parent="Margin/VBox/SettingsHBox"]
+layout_mode = 2
+text = "模式"
+
+[node name="ModeOption" type="OptionButton" parent="Margin/VBox/SettingsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MapLabel" type="Label" parent="Margin/VBox/SettingsHBox"]
+layout_mode = 2
+text = "地图"
+
+[node name="MapOption" type="OptionButton" parent="Margin/VBox/SettingsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+text = "显示名称"
+
+[node name="NameField" type="LineEdit" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "玩家"
+
+[node name="SlotsPanel" type="PanelContainer" parent="Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="SlotsContainer" type="VBoxContainer" parent="Margin/VBox/SlotsPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ActionsHBox" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CharacterSelectButton" type="Button" parent="Margin/VBox/ActionsHBox"]
+layout_mode = 2
+text = "选择角色"
+
+[node name="CosmeticsButton" type="Button" parent="Margin/VBox/ActionsHBox"]
+layout_mode = 2
+text = "外观装扮"
+
+[node name="ReadyButton" type="Button" parent="Margin/VBox/ActionsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "准备"
+
+[node name="StartButton" type="Button" parent="Margin/VBox/ActionsHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "开始对局"
+
+[node name="LeaveButton" type="Button" parent="Margin/VBox/ActionsHBox"]
+layout_mode = 2
+text = "离开"
+
+[connection signal="text_submitted" from="Margin/VBox/NameField" to="." method="_on_name_submitted"]
+[connection signal="item_selected" from="Margin/VBox/SettingsHBox/ModeOption" to="." method="_on_mode_selected"]
+[connection signal="item_selected" from="Margin/VBox/SettingsHBox/MapOption" to="." method="_on_map_selected"]
+[connection signal="pressed" from="Margin/VBox/ActionsHBox/CharacterSelectButton" to="." method="_on_character_select_pressed"]
+[connection signal="pressed" from="Margin/VBox/ActionsHBox/CosmeticsButton" to="." method="_on_cosmetics_pressed"]
+[connection signal="pressed" from="Margin/VBox/ActionsHBox/ReadyButton" to="." method="_on_ready_pressed"]
+[connection signal="pressed" from="Margin/VBox/ActionsHBox/StartButton" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Margin/VBox/ActionsHBox/LeaveButton" to="." method="_on_leave_pressed"]

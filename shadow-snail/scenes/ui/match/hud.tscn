@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmatchhud001"]
+
+[ext_resource type="Script" path="res://scripts/ui/match_hud.gd" id="1_script"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme_override_constants/separation = 24
+
+[node name="ModeLabel" type="Label" parent="TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "模式"
+
+[node name="TimerLabel" type="Label" parent="TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 20
+text = "剩余 90 秒"
+horizontal_alignment = 2
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -40.0
+offset_right = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.7, 0.76, 0.84, 1)
+text = "操作提示"

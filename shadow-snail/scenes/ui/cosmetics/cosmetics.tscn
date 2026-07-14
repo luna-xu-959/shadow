@@ -1,0 +1,357 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcosmetics01"]
+
+[ext_resource type="Script" path="res://scripts/ui/cosmetics.gd" id="1_script"]
+
+[node name="Cosmetics" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Header" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BackButton" type="TextureButton" parent="Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_vertical = 4
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TitleArea" type="Control" parent="Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="TitleBanner" type="TextureRect" parent="Header/TitleArea"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -28.0
+offset_right = 220.0
+offset_bottom = 28.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="Header/TitleArea"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -16.0
+offset_right = 180.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 22
+text = "玩家"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsButton" type="TextureButton" parent="Header"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_vertical = 4
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="WardrobeSceneLayer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 72.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+z_index = 1
+
+[node name="ClothingUiContainer" type="SubViewportContainer" parent="WardrobeSceneLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="ClothingUiViewport" type="SubViewport" parent="WardrobeSceneLayer/ClothingUiContainer"]
+unique_name_in_owner = true
+disable_3d = true
+transparent_bg = true
+handle_input_locally = true
+size = Vector2i(400, 544)
+render_target_update_mode = 4
+
+[node name="ClothingPanelFrame" type="Control" parent="WardrobeSceneLayer/ClothingUiContainer/ClothingUiViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ClothingPanelUnified" type="TextureRect" parent="WardrobeSceneLayer/ClothingUiContainer/ClothingUiViewport/ClothingPanelFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ClothingPanelContent" type="Control" parent="WardrobeSceneLayer/ClothingUiContainer/ClothingUiViewport/ClothingPanelFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TabRow" type="HBoxContainer" parent="WardrobeSceneLayer/ClothingUiContainer/ClothingUiViewport/ClothingPanelFrame/ClothingPanelContent"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09
+anchor_top = 0.115
+anchor_right = 0.91
+anchor_bottom = 0.255
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="ItemGrid" type="GridContainer" parent="WardrobeSceneLayer/ClothingUiContainer/ClothingUiViewport/ClothingPanelFrame/ClothingPanelContent"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.3
+anchor_right = 0.9
+anchor_bottom = 0.86
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="ChangeCharacterButton" type="Button" parent="WardrobeSceneLayer/ClothingUiContainer/ClothingUiViewport/ClothingPanelFrame/ClothingPanelContent"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.14
+anchor_top = 0.88
+anchor_right = 0.86
+anchor_bottom = 0.955
+grow_horizontal = 2
+text = "更换角色"
+
+[node name="PaletteUiContainer" type="SubViewportContainer" parent="WardrobeSceneLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="PaletteUiViewport" type="SubViewport" parent="WardrobeSceneLayer/PaletteUiContainer"]
+unique_name_in_owner = true
+disable_3d = true
+transparent_bg = true
+handle_input_locally = true
+size = Vector2i(400, 544)
+render_target_update_mode = 4
+
+[node name="PalettePanelFrame" type="Control" parent="WardrobeSceneLayer/PaletteUiContainer/PaletteUiViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PalettePanelBlank" type="TextureRect" parent="WardrobeSceneLayer/PaletteUiContainer/PaletteUiViewport/PalettePanelFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PalettePanelContent" type="Control" parent="WardrobeSceneLayer/PaletteUiContainer/PaletteUiViewport/PalettePanelFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PaletteInsets" type="Control" parent="WardrobeSceneLayer/PaletteUiContainer/PaletteUiViewport/PalettePanelFrame/PalettePanelContent"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.20
+anchor_right = 0.94
+anchor_bottom = 0.76
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PaletteVBox" type="VBoxContainer" parent="WardrobeSceneLayer/PaletteUiContainer/PaletteUiViewport/PalettePanelFrame/PalettePanelContent/PaletteInsets"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ColorPicker" type="ColorPicker" parent="WardrobeSceneLayer/PaletteUiContainer/PaletteUiViewport/PalettePanelFrame/PalettePanelContent/PaletteInsets/PaletteVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.98, 0.97, 0.94, 1)
+edit_alpha = false
+picker_shape = 1
+
+[node name="ColorGrid" type="GridContainer" parent="WardrobeSceneLayer/PaletteUiContainer/PaletteUiViewport/PalettePanelFrame/PalettePanelContent/PaletteInsets/PaletteVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 6
+
+[node name="WardrobeSceneContainer" type="SubViewportContainer" parent="WardrobeSceneLayer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+stretch = true
+
+[node name="WardrobeSceneViewport" type="SubViewport" parent="WardrobeSceneLayer/WardrobeSceneContainer"]
+unique_name_in_owner = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1280, 544)
+render_target_update_mode = 4
+
+[node name="WardrobeCamera" type="Camera3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 1.8, 3.2)
+fov = 38.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport"]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 2, 4, 2)
+light_energy = 1.2
+
+[node name="FillLight" type="DirectionalLight3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport"]
+transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, -2, 2, 2)
+light_color = Color(0.82, 0.88, 1, 1)
+light_energy = 0.45
+
+[node name="WardrobeSceneRoot" type="Node3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport"]
+unique_name_in_owner = true
+
+[node name="LeftPanelPivot" type="Node3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport/WardrobeSceneRoot"]
+unique_name_in_owner = true
+
+[node name="LeftPanelMesh" type="MeshInstance3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport/WardrobeSceneRoot/LeftPanelPivot"]
+unique_name_in_owner = true
+
+[node name="CharacterPivot" type="Node3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport/WardrobeSceneRoot"]
+unique_name_in_owner = true
+
+[node name="RightPanelPivot" type="Node3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport/WardrobeSceneRoot"]
+unique_name_in_owner = true
+
+[node name="RightPanelMesh" type="MeshInstance3D" parent="WardrobeSceneLayer/WardrobeSceneContainer/WardrobeSceneViewport/WardrobeSceneRoot/RightPanelPivot"]
+unique_name_in_owner = true
+
+[node name="ReadyButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -112.0
+offset_right = -28.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+z_index = 12
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="pressed" from="Header/BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Header/SettingsButton" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="WardrobeSceneLayer/ClothingUiContainer/ClothingUiViewport/ClothingPanelFrame/ClothingPanelContent/ChangeCharacterButton" to="." method="_on_change_character_pressed"]
+[connection signal="pressed" from="ReadyButton" to="." method="_on_ready_pressed"]

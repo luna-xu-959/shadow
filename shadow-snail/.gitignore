@@ -1,0 +1,11 @@
+# Godot 4+
+.godot/
+/android/
+Saved/
+*.translation
+
+# Local extracts / IDE
+**/_extract_test/
+.vscode/
+.cursor/
+*.log

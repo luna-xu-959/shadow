@@ -1,0 +1,155 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmainmenu001"]
+
+[ext_resource type="Script" path="res://scripts/ui/main_menu.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.08, 0.1, 0.14, 0.92)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.34, 0.42, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.07, 0.11, 1)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+custom_minimum_size = Vector2(520, 560)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "影噬"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Center/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.84, 0.92, 1)
+text = "影子乱斗 — 搭配造型，选择模式，踩踏对手的影子。"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HostButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "创建房间"
+
+[node name="JoinButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "加入房间"
+
+[node name="OfflineLobbyButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "离线房间"
+
+[node name="CharacterSelectButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "选择角色"
+
+[node name="CosmeticsButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "外观装扮"
+
+[node name="QuitButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "退出游戏"
+
+[node name="StatusLabel" type="Label" parent="Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.8, 1)
+autowrap_mode = 2
+
+[node name="JoinPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -80.0
+offset_right = 220.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="JoinPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="JoinPanel/VBox"]
+layout_mode = 2
+text = "主机 IP（UDP 端口 8920）"
+horizontal_alignment = 1
+
+[node name="AddressField" type="LineEdit" parent="JoinPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "127.0.0.1 或 100.x.x.x"
+
+[node name="HBox" type="HBoxContainer" parent="JoinPanel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="JoinConfirmButton" type="Button" parent="JoinPanel/VBox/HBox"]
+layout_mode = 2
+text = "连接"
+
+[node name="JoinCancelButton" type="Button" parent="JoinPanel/VBox/HBox"]
+layout_mode = 2
+text = "取消"
+
+[connection signal="pressed" from="Center/Panel/VBox/OfflineLobbyButton" to="." method="_on_offline_lobby_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/HostButton" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/JoinButton" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/CharacterSelectButton" to="." method="_on_character_select_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/CosmeticsButton" to="." method="_on_cosmetics_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/QuitButton" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="JoinPanel/VBox/HBox/JoinConfirmButton" to="." method="_on_join_confirm_pressed"]
+[connection signal="pressed" from="JoinPanel/VBox/HBox/JoinCancelButton" to="." method="_on_join_cancel_pressed"]
